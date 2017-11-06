@@ -65,7 +65,7 @@ public class LoginAction implements IAction {
 		} catch(Exception e) {
 			e.printStackTrace();
 //			request.setAttribute("msg", "error");
-			request.setAttribute("error", e.getMessage());
+			request.setAttribute("msg", e.getMessage());
 			RequestDispatcher rd = request.getRequestDispatcher("jsp/login.jsp");
 			rd.forward(request, response);
 		}

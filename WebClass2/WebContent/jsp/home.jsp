@@ -41,9 +41,9 @@ function menu_out(e) {
   	
     <%-- 세션에 사용자 정보가 없는 경우 --%>
     <c:if test="${ empty user }">
-    	<a class="text-bold text-white" style="text-decoration: none" href="${ contextPath }/login.do">Sign in</a>
+    	<a class="text-bold text-white" style="text-decoration: none" href="${ contextPath }/jsp/login.jsp">Sign in</a>
     	<span class="text-bold text-white">&nbsp; or &nbsp;</span>
-    	<a class="text-bold text-white" style="text-decoration: none" href="${ contextPath }/signup.do">Sign up</a>
+    	<a class="text-bold text-white" style="text-decoration: none" href="${ contextPath }/jsp/signup.jsp">Sign up</a>
     </c:if>
     <c:if test="${ !empty user }">
     <%-- 세션이 있는 경우 --%>
