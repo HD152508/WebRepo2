@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.dimigo.service.UserService;
 import org.dimigo.util.CommonUtil;
 import org.dimigo.vo.UserVO;
 
@@ -44,28 +45,23 @@ public class LoginAction implements IAction {
 			// 2. 입력값 검증
 			validate(id, pwd);
 			
-			// id, pwd 정합성 체크
-			boolean result = true;
+			UserVO user = new UserVO();
+			user.setId(id);
+			user.setPwd(pwd);
 			
-			if (result) {
-				// 세션에 사용자 정보를 생성해서 담기
-				HttpSession session = request.getSession();
-				UserVO user = new UserVO();
-				user.setId(id);
-				user.setName("홍길동");
-				user.setNickname("의적");
-				
-				session.setAttribute("user", user);
-				
-				RequestDispatcher rd = request.getRequestDispatcher("jsp/home.jsp");
-				rd.forward(request, response);
-			} else {
-				throw new Exception("Invalid username or password");
-			}
+			// 3. Service 호출
+			UserService service = new UserService();
+			UserVO result = service.login(user);
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("user", result);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("jsp/home.jsp");
+			rd.forward(request, response);
+			
 		} catch(Exception e) {
 			e.printStackTrace();
-//			request.setAttribute("msg", "error");
-			request.setAttribute("msg", e.getMessage());
+			request.setAttribute("error", e.getMessage());
 			RequestDispatcher rd = request.getRequestDispatcher("jsp/login.jsp");
 			rd.forward(request, response);
 		}

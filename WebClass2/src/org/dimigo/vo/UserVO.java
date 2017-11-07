@@ -19,6 +19,7 @@ public class UserVO {
 	
 	private String id;
 	private String name;
+	private String pwd;
 	private String nickname;
 	
 	public UserVO(){}
@@ -34,6 +35,18 @@ public class UserVO {
 		this.nickname = nickname;
 	}
 	
+	/**
+	 * @return the pwd
+	 */
+	public String getPwd() {
+		return pwd;
+	}
+	/**
+	 * @param pwd the pwd to set
+	 */
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
 	/**
 	 * @return the id
 	 */
