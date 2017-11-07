@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,28 +12,22 @@
 </head>
 <body>
 <div class="container">
-	
-	<%
-		String id = (request.getParameter("id") == null) ? "" : request.getParameter("id");
-		String pwd = (request.getParameter("pwd") == null) ? "" : request.getParameter("pwd");
-		String name = (request.getParameter("name") == null) ? "" : request.getParameter("name");
-		String nickname = (request.getParameter("nickname") == null) ? "" : request.getParameter("nickname");
-	%>
+
 	
   <form id="signupForm" class="form-signin" action="${ contextPath }/signup.do" method="post">
     <h2 class="form-signin-heading">Please sign up</h2>
     
     <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" name="id" value="<%= id %>" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <input type="email" name="id" value="${ param.id }" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
     
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="pwd" value="<%= pwd %>" id="inputPassword" class="form-control" placeholder="Password" required>
+    <input type="password" name="pwd" value="${ param.pwd }" id="inputPassword" class="form-control" placeholder="Password" required>
 	
 	<label for="inputName" class="sr-only">Name</label>
-    <input type="text" name="name" value="<%= name %>" id="inputName" class="form-control" placeholder="Name" required>
+    <input type="text" name="name" value="${ param.name }" id="inputName" class="form-control" placeholder="Name" required>
 	
 	<label for="inputNickName" class="sr-only">Nick Name</label>
-    <input type="text" name="nickname" value="<%= nickname %>" id="inputNickName" class="form-control" placeholder="Nickname" required>
+    <input type="text" name="nickname" value="${ param.nickname }" id="inputNickName" class="form-control" placeholder="Nickname" required>
     <br>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
   </form>
@@ -43,22 +38,14 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-
+<c:if test="${ error != null }">
 <script>
-	<%-- 회원 가입이 실패한 경우 처리 추가 --%>
-	<%
-		if("error".equals(request.getAttribute("msg"))) {
-		
-	%>
-		var myModal = $('#myModal');
-		myModal.find('.modal-title').text('Sign Up Error');
-		myModal.find('.modal-body').text('회원 가입 시 오류가 발생하였습니다.');
-		myModal.modal();
-	<%
-		}
-	%>
-
+	var myModal = $('#myModal');
+	myModal.find('.modal-title').text('Login Error');
+	myModal.find('.modal-body').text('${ error }');
+	myModal.modal();
 </script>
+</c:if>
 
 </body>
 </html>
