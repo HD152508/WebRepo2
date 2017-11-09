@@ -48,7 +48,7 @@ public class UserService {
 	
 	public void signup(UserVO user) throws Exception {
 		// DB에 사용자 등록
-		boolean result = true;
+		boolean result = false;
 		
 		if(!result) throw new Exception("회원가입 시 오류가 발생했습니다.");
 	}
