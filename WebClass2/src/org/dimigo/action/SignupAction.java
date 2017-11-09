@@ -60,14 +60,8 @@ public class SignupAction implements IAction{
 			UserService service = new UserService();
 			service.signup(user);
 			
-			boolean result = true;
-			
-			if (result) {
-				RequestDispatcher rd = request.getRequestDispatcher("jsp/login.jsp");
-				rd.forward(request, response);
-			} else {
-				throw new Exception("회원 가입 시 오류가 발생했습니다.");
-			}
+			RequestDispatcher rd = request.getRequestDispatcher("jsp/login.jsp");
+			rd.forward(request, response);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
