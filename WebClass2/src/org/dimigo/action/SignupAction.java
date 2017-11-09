@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.dimigo.service.UserService;
 import org.dimigo.util.CommonUtil;
 import org.dimigo.vo.UserVO;
 
@@ -56,6 +57,9 @@ public class SignupAction implements IAction{
 			validate(user);
 			
 			// 회원가입 처리
+			UserService service = new UserService();
+			service.signup(user);
+			
 			boolean result = true;
 			
 			if (result) {

@@ -10,6 +10,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.dimigo.service.UserService;
 import org.dimigo.vo.UserVO;
 
 /**
@@ -31,10 +32,10 @@ public class ListAction implements IAction{
 	 */
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<UserVO> list = new ArrayList<>();
-		list.add(new UserVO("aaa@naver.com", "안용식", "용팔이"));
-		list.add(new UserVO("bbb@naver.com", "이재승", "리중딱"));
-		list.add(new UserVO("ccc@naver.com", "주현도", "쭈삼이"));
+		
+		// Service 호출
+		UserService service = new UserService();
+		List<UserVO> list = service.searchUserList();
 		
 		request.setAttribute("list", list);
 		
