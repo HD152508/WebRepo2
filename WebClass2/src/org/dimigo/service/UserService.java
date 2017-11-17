@@ -3,9 +3,11 @@
  */
 package org.dimigo.service;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dimigo.dao.UserDao;
 import org.dimigo.vo.UserVO;
 
 /**
@@ -20,37 +22,55 @@ import org.dimigo.vo.UserVO;
  * @author : KHH
  * @version : 1.0
  */
-public class UserService {
+public class UserService extends AbstractService {
 	
 	public UserVO login(UserVO user) throws Exception {
-		// DB에서 id, pwd조회
-		boolean result = true;
-		
-		if (result) {
-			user.setName("홍길동");
-			user.setNickname("의적");
-		} else {
-			throw new Exception ("Invalid username or password");
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			
+			UserDao dao = new UserDao(conn);
+			UserVO result = dao.searchUser(user);
+			
+			if (result == null)
+				throw new Exception("Invalid username or password");
+			return result;
+		} finally {
+			if (conn != null) conn.close();
 		}
-		
-		return user;
 	}
 	
 	public List<UserVO> searchUserList() throws Exception {
-		// DB에서 사용자 목록 조회
-		List<UserVO> list = new ArrayList<>();
-		list.add(new UserVO("aaa@naver.com", "안용식", "용팔이"));
-		list.add(new UserVO("bbb@naver.com", "이재승", "리중딱"));
-		list.add(new UserVO("ccc@naver.com", "주현도", "쭈삼이"));
-		
-		return list;
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			
+			UserDao dao = new UserDao(conn);
+			
+			return dao.searchUserList();
+		} finally {
+			if (conn != null) conn.close();
+		}
 	}
 	
 	public void signup(UserVO user) throws Exception {
-		// DB에 사용자 등록
-		boolean result = false;
-		
-		if(!result) throw new Exception("회원가입 시 오류가 발생했습니다.");
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			
+			UserDao dao = new UserDao(conn);
+			
+			// 사용중인 아이디인지 체크
+			UserVO result = dao.searchUserById(user);
+			if (result != null)
+				throw new Exception("이미 사용중인 아이디입니다.");
+			
+			// 사용자 등록
+			dao.insertUser(user);
+			
+		} finally {
+			if (conn != null) conn.close();
+		}
 	}
 	
 }
